@@ -22,12 +22,11 @@ nav > ul {
 
 nav > ul > li {
     list-style: none;
-    margin: 0 8px;
+    margin: auto 10px;
 }
 
 header > a {
     font-size: 32px;
-    font-family: serif;
     text-decoration: none;
 }
 
