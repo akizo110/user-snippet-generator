@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User snippet generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="https://github.com/filipelinhares/ress/blob/master/ress.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+</head>
+
+<body>
+    <header>
+        <a href="#">User snippet generator</a>
+        <nav>
+            <ul>
+                <li><a href="">使い方</a></li>
+                <li><a href="">ツイート</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div id="app">
+        <div class="flex_container item">
+            <section class="flex_item">
+                <h3 class="sub_title">名前
+                    <span class="required"></span>
+                    <span class="error" v-if="nameError">{{ nameErrorMessage }}</span>
+                </h3>
+                <input type="text" id="name"　autocomplete="off" v-model="name">
+            </section>
+    
+            <section class="flex_item">
+                <h3 class="sub_title">キーワード
+                    <span class="required"></span>
+                    <span class="error" v-if="prefixError">{{ prefixErrorMessage }}</span>
+                </h3>
+                
+                <input type="text" id="prefix" autocomplete="off" v-model="prefix">
+            </section>
+        </div>
+
+
+        <section class="item">
+            <h3 class="sub_title">説明
+                <span class="error" v-if="descriptionError">{{ descriptionErrorMessage }}</span>
+            </h3>
+            <input type="text" id="description" autocomplete="off" v-model="description">
+        </section>
+
+        <section class="item">
+            <div class="flex_container">
+                <h3 class="sub_title">コード
+                    <span class="required"></span>
+                    <span class="error" v-if="bodyError">{{ bodyErrorMessage }}</span>
+                </h3>
+                <div class="select_wrapper">
+                    <h3>インデント</h3>
+                    <select class="indent_select" v-model="selected">
+                        <option v-for="option in options" v-bind:value="option.value">
+                            {{ option.text }}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            
+            <textarea name="body" id="body" cols="30" rows="10" v-model="body"></textarea>
+        </section>
+
+        <section class="item">
+            <button type="button" @click="generateSnippet()">生　成</button>
+        </section>
+
+        <section class="item" id="codeArea" v-if="result">
+            <p class="copy_message">下記のコードをクリップボードにコピーしました</p>
+            <pre><code>{{ result }}</code></pre>
+        </section>
+
+    </div>
+    <footer>
+        <p>©️ 2020 Akizo.</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+
+</html>
