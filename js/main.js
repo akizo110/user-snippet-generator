@@ -52,9 +52,6 @@ const app = new Vue({
             if(navigator.clipboard){
                 navigator.clipboard.writeText(this.result);
             }
-
-            // モーダルウィンドウを表示
-            // 下からポップアップみたいな感じで現れて、自然と消える形にしたい
         },
 
         trimIndent: function (code) {
@@ -106,7 +103,6 @@ const app = new Vue({
             // nameの文字数チェック 20文字以下
             if (this.name.length > 20) {
                 this.errors.push(new InputError('nameError', '20文字以下で入力してください'));
-                event.preventDefault();
             }
             // prefixの文字数チェック 10文字以下
             if (this.prefix.length > 10) {
