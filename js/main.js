@@ -33,7 +33,7 @@ const app = new Vue({
         generateSnippet: function () {
             // 初期化
             this.result = '';
-            
+
             // バリデーションチェック
             this.validator();
             if (this.errors.length > 0) {
@@ -108,8 +108,8 @@ const app = new Vue({
                 this.errors.push(new InputError('nameError', '20文字以下で入力してください'));
             }
             // prefixの文字数チェック 10文字以下
-            if (this.prefix.length > 10) {
-                this.errors.push(new InputError('prefixError', '10文字以下で入力してください'));
+            if (this.prefix.length > 20) {
+                this.errors.push(new InputError('prefixError', '20文字以下で入力してください'));
             }
             // descriptionの文字数チェック 50文字以下
             if (this.description.length > 50) {
