@@ -31,6 +31,9 @@ const app = new Vue({
         },
 
         generateSnippet: function () {
+            // 初期化
+            this.result = '';
+            
             // バリデーションチェック
             this.validator();
             if (this.errors.length > 0) {
