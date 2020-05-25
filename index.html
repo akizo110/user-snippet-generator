@@ -24,7 +24,7 @@
             </ul>
         </nav>
     </header>
-    
+
     <div id="app">
         <div class="flex_container item">
             <section class="flex_item">
@@ -32,16 +32,16 @@
                     <span class="required"></span>
                     <span class="error" v-if="nameError">{{ nameErrorMessage }}</span>
                 </h3>
-                <input type="text" id="name"　autocomplete="off" v-model="name">
+                <input type="text" id="name" 　autocomplete="off" v-model="name" :placeholder="namePlaceholder">
             </section>
-    
+
             <section class="flex_item">
                 <h3 class="sub_title">キーワード
                     <span class="required"></span>
                     <span class="error" v-if="prefixError">{{ prefixErrorMessage }}</span>
                 </h3>
-                
-                <input type="text" id="prefix" autocomplete="off" v-model="prefix">
+
+                <input type="text" id="prefix" autocomplete="off" v-model="prefix" :placeholder="prefixPlaceholder">
             </section>
         </div>
 
@@ -50,10 +50,11 @@
             <h3 class="sub_title">説明
                 <span class="error" v-if="descriptionError">{{ descriptionErrorMessage }}</span>
             </h3>
-            <input type="text" id="description" autocomplete="off" v-model="description">
+            <input type="text" id="description" autocomplete="off" v-model="description"
+                :placeholder="descriptionPlaceholder">
         </section>
 
-        <section class="item">
+        <section class="item textarea">
             <div class="flex_container">
                 <h3 class="sub_title">コード
                     <span class="required"></span>
@@ -69,25 +70,28 @@
                 </div>
 
             </div>
-            
-            <textarea name="body" id="body" cols="30" rows="10" v-model="body"></textarea>
+
+            <textarea name="body" id="body" cols="30" rows="10" v-model="body"
+                :placeholder="bodyPlaceholder"></textarea>
+
+            <transition name="fade">
+                <section class="item modal" id="codeArea" v-if="showModal">
+                    <p class="copy_message" v-html="message"></p>
+                    <button class="button-small ok_button" type="button" @click="hide()">OK</button>
+                    <pre><code>{{ result }}</code></pre>
+                </section>
+            </transition>
+
         </section>
 
         <section class="item">
             <button type="button" @click="generateSnippet()">生　成</button>
         </section>
 
-        <transition name="fade">
-            <section class="item" id="codeArea" v-if="result">
-                <p class="copy_message">下記のコードをクリップボードにコピーしました<br>VSCodeにペーストして下さい</p>
-                <pre><code>{{ result }}</code></pre>
-            </section>
-        </transition>
-
+        <footer>
+            <p class="copyright">©️ 2020 Akizo.</p>
+        </footer>
     </div>
-    <footer>
-        <p class="copyright">©️ 2020 Akizo.</p>
-    </footer>
     <script src="js/main.js"></script>
 </body>
 

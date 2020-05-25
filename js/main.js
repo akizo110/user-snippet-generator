@@ -6,6 +6,16 @@ const app = new Vue({
         description: '',
         body: '',
         result: '',
+        showModal: false,
+        message: '',
+
+        namePlaceholder: 'Copyright',
+        prefixPlaceholder: 'footer',
+        descriptionPlaceholder: 'コピーライトのフッター',
+        bodyPlaceholder: `<footer>
+    <p class="copyright">2020 Akizo.</p>
+</footer>`,
+
 
         nameError: '',
         prefixError: '',
@@ -33,6 +43,7 @@ const app = new Vue({
         generateSnippet: function () {
             // 初期化
             this.result = '';
+            this.showModal = false;
 
             // バリデーションチェック
             this.validator();
@@ -52,9 +63,13 @@ const app = new Vue({
             this.result = `"${name}": ${JSON.stringify(obj, null, '\t')},`;
 
             // クリップボードにコピー
-            if(navigator.clipboard){
+            if (navigator.clipboard) {
                 navigator.clipboard.writeText(this.result);
+                this.message = '下記のコードをクリップボードにコピーしました<br>VSCodeにペーストして下さい';
+            } else {
+                this.message = '下記のコードをコピーしてVSCodeにペーストして下さい';
             }
+            this.showModal = true;
         },
 
         trimIndent: function (code) {
@@ -122,6 +137,10 @@ const app = new Vue({
                 this[err.target] = err.message;
             }
         },
+
+        hide: function () {
+            this.showModal = false;
+        }
     },
 
     computed: {
@@ -137,7 +156,10 @@ const app = new Vue({
         bodyErrorMessage: function () {
             return this.bodyError;
         },
-        
+
+        // copyMessage: function() {
+        //     return this.message;
+        // }
     }
 });
 
