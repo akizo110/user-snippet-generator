@@ -53,14 +53,7 @@ const app = new Vue({
                 return;
             }
 
-            // jsonオブジェクトの生成
-            const name = this.name;
-            const obj = {};
-            obj.prefix = this.prefix;
-            obj.description = this.description;
-            obj.body = this.trimIndent(this.body);
-
-            this.result = `"${name}": ${JSON.stringify(obj, null, '\t')},`;
+            this.result = this.createResult();
 
             // クリップボードにコピー
             if (navigator.clipboard) {
@@ -70,6 +63,24 @@ const app = new Vue({
                 this.message = '下記のコードをコピーしてVSCodeにペーストして下さい';
             }
             this.showModal = true;
+        },
+
+        createResult: function() {
+            if(this.isOnlyBody()) {
+                return this.createBodyOnly();
+            }
+
+            const name = this.name;
+            const obj = {};
+            obj.prefix = this.prefix;
+            obj.description = this.description;
+            obj.body = this.trimIndent(this.body);
+
+            return `"${name}": ${JSON.stringify(obj, null, '\t')},`;
+        },
+
+        createBodyOnly: function() {
+            return `"body": ${JSON.stringify(this.trimIndent(this.body), null, '\t')},`;
         },
 
         trimIndent: function (code) {
@@ -100,8 +111,31 @@ const app = new Vue({
             return tmp.split('\n');
         },
 
+        isOnlyBody: function() {
+            const isEmptyName = Boolean(!this.name);
+            const isEmptyPrefix = Boolean(!this.prefix);
+            const isEmptyDescription = Boolean(!this.description);
+            const isEmptyBody = Boolean(!this.body);
+            console.log(isEmptyName);
+            console.log(isEmptyPrefix);
+            console.log(isEmptyDescription);
+            console.log(isEmptyBody);
+            if(
+                isEmptyName === true &&
+                isEmptyPrefix === true &&
+                isEmptyDescription === true &&
+                isEmptyBody === false
+            ) {
+                return true;
+            }
+            return false;
+        },
+
         validator: function () {
             this.initError();
+
+            // ボディのみ入力されている場合許容する
+            if(this.isOnlyBody()) return;
 
             // nameの入力チェック 必須 日本語可
             if (!this.name) {
