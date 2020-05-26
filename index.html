@@ -9,18 +9,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
     <link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
 </head>
 
 <body>
-    <header>
+    <header class="item">
         <a href="#">User snippet gen</a>
         <nav>
             <ul>
-                <li><a href="">使い方</a></li>
-                <li><a href="">ツイート</a></li>
+                <li><a href="" target="_blank">使い方</a></li>
+                <li><a href="https://twitter.com/akizo110?ref_src=twsrc%5Etfw" class="twitter" target="_blank"><i class="fab fa-twitter bird"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +32,7 @@
                     <span class="required"></span>
                     <span class="error" v-if="nameError">{{ nameErrorMessage }}</span>
                 </h3>
-                <input type="text" id="name" 　autocomplete="off" v-model="name" :placeholder="namePlaceholder">
+                <input type="text" id="name" autocomplete="off" v-model="name" :placeholder="namePlaceholder">
             </section>
 
             <section class="flex_item">

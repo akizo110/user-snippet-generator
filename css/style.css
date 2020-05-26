@@ -22,7 +22,8 @@ nav>ul {
 
 nav>ul>li {
     list-style: none;
-    margin: auto 10px;
+    margin: auto 0;
+    margin-left: 20px;
 }
 
 header>a {
@@ -168,4 +169,26 @@ footer p {
 ::placeholder {
     font-style: italic;
     color: #ccc;
+}
+
+.twitter {
+    display: block;
+    position: relative;
+    background-color:#9b4dca;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+    min-width: 25px;
+}
+
+.twitter:hover {
+    background-color: #606c76;
+}
+
+.bird {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: #fff;
 }
