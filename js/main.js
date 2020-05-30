@@ -22,7 +22,7 @@ const app = new Vue({
         descriptionError: '',
         bodyError: '',
 
-        selected: '    ',
+        selected: '  ',
         options: [
             { text: 'Space:2', value: '  ' },
             { text: 'Space:4', value: '    ' },
