@@ -1,3 +1,5 @@
+import { dollarMarkReplacer } from './regrest.js';
+
 const app = new Vue({
     el: "#app",
     data: {
@@ -48,7 +50,6 @@ const app = new Vue({
             // バリデーションチェック
             this.validator();
             if (this.errors.length > 0) {
-                console.log(this.errors);
                 this.showError();
                 return;
             }
@@ -66,21 +67,30 @@ const app = new Vue({
         },
 
         createResult: function() {
-            if(this.isOnlyBody()) {
-                return this.createBodyOnly();
-            }
+            let result = this.isOnlyBody() ? this.createBodyOnly() : this.createAll();
+            const escapeResult = this.escapeDollarMark(result);
+            return escapeResult;
+        },
 
+        createAll: function() {
             const name = this.name;
             const obj = {};
             obj.prefix = this.prefix;
             obj.description = this.description;
             obj.body = this.trimIndent(this.body);
-
             return `"${name}": ${JSON.stringify(obj, null, '\t')},`;
         },
 
+        escapeDollarMark: function(text) {
+            // $ のエスケープ 処理
+            const dollarMark = new RegExp('\\$', 'g');
+            dollarMarkReplacer.keep(text);
+            dollarMarkReplacer.replace(dollarMark, '\\\\$');
+            return dollarMarkReplacer.reverse();
+        },
+
         createBodyOnly: function() {
-            return `"body": ${JSON.stringify(this.trimIndent(this.body), null, '\t')},`;
+            return`"body": ${JSON.stringify(this.trimIndent(this.body), null, '\t')},`;
         },
 
         trimIndent: function (code) {
@@ -116,10 +126,6 @@ const app = new Vue({
             const isEmptyPrefix = Boolean(!this.prefix);
             const isEmptyDescription = Boolean(!this.description);
             const isEmptyBody = Boolean(!this.body);
-            console.log(isEmptyName);
-            console.log(isEmptyPrefix);
-            console.log(isEmptyDescription);
-            console.log(isEmptyBody);
             if(
                 isEmptyName === true &&
                 isEmptyPrefix === true &&
@@ -153,12 +159,12 @@ const app = new Vue({
             }
 
             // nameの文字数チェック 20文字以下
-            if (this.name.length > 20) {
-                this.errors.push(new InputError('nameError', '20文字以下で入力してください'));
+            if (this.name.length > 40) {
+                this.errors.push(new InputError('nameError', '40文字以下で入力してください'));
             }
-            // prefixの文字数チェック 10文字以下
-            if (this.prefix.length > 20) {
-                this.errors.push(new InputError('prefixError', '20文字以下で入力してください'));
+            // prefixの文字数チェック 40文字以下
+            if (this.prefix.length > 40) {
+                this.errors.push(new InputError('prefixError', '40文字以下で入力してください'));
             }
             // descriptionの文字数チェック 50文字以下
             if (this.description.length > 50) {
@@ -191,9 +197,6 @@ const app = new Vue({
             return this.bodyError;
         },
 
-        // copyMessage: function() {
-        //     return this.message;
-        // }
     }
 });
 
