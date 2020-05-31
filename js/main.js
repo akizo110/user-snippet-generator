@@ -76,7 +76,11 @@ const app = new Vue({
             const name = this.name;
             const obj = {};
             obj.prefix = this.prefix;
-            obj.description = this.description;
+
+            if(this.description) {
+                obj.description = this.description;
+            }
+            
             obj.body = this.trimIndent(this.body);
             return `"${name}": ${JSON.stringify(obj, null, '\t')},`;
         },
